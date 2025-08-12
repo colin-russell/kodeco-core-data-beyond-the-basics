@@ -71,6 +71,13 @@ extension RocketLaunch {
     let launchDateSortDescriptor = NSSortDescriptor(key: "launchDate", ascending: true)
     return FetchRequest(entity: RocketLaunch.entity(), sortDescriptors: [nameSortDescriptor, launchDateSortDescriptor])
   }
+  
+  static func unviewedLaunchesFetchRequest() -> FetchRequest<RocketLaunch> {
+    let nameSortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+    let launchDateSortDescriptor = NSSortDescriptor(key: "launchDate", ascending: true)
+    let isCompletedPredicate = NSPredicate(format: "%K == %@", "isViewed", NSNumber(value: false))
+    return FetchRequest(entity: RocketLaunch.entity(), sortDescriptors: [nameSortDescriptor, launchDateSortDescriptor], predicate: isCompletedPredicate)
+  }
 
   @NSManaged public var name: String?
   @NSManaged public var isViewed: Bool
