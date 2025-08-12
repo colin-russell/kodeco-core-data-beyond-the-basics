@@ -38,6 +38,12 @@ struct LaunchesView: View {
   var launches: FetchedResults<RocketLaunch> {
     launchesFetchRequest.wrappedValue
   }
+  
+  let sortTypes = [
+    (name: "Name", descriptors: [SortDescriptor(\RocketLaunch.name, order: .forward)]),
+    (name: "LaunchDate", descriptors: [SortDescriptor(\RocketLaunch.launchDate, order: .forward)])
+  ]
+  @State var activeSortIndex = 0
 
   var body: some View {
     VStack {
@@ -62,6 +68,24 @@ struct LaunchesView: View {
       .padding(.leading)
     }
     .navigationBarTitle(Text("Launches"))
+    .onChange(of: activeSortIndex) { newValue in
+      // Update the sort descriptors for the fetch request
+      let descriptors = sortTypes[newValue].descriptors
+      launches.sortDescriptors = descriptors
+    }
+    .toolbar {
+      ToolbarItem(placement: .navigationBarTrailing) {
+        Menu {
+          Picker("Sort by", selection: $activeSortIndex) {
+            ForEach(0..<sortTypes.count, id: \.self) { index in
+              Text(sortTypes[index].name)
+            }
+          }
+        } label: {
+          Image(systemName: "line.3.horizontal.decrease.circle.fill")
+        }
+      }
+    }
   }
 }
 
