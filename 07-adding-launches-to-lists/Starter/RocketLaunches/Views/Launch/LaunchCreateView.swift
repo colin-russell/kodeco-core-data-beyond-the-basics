@@ -44,6 +44,8 @@ struct LaunchCreateView: View {
   @State var isViewed = false
   @State var launchDate = Date()
   @State var launchpad: String = ""
+  
+  let launchList: RocketLaunchList
 
   var body: some View {
     NavigationView {
@@ -69,6 +71,7 @@ struct LaunchCreateView: View {
             launchDate: self.launchDate,
             isViewed: false,
             launchpad: self.launchpad,
+            in: self.launchList,
             using: self.viewContext)
           dismiss()
         }, label: {
@@ -82,6 +85,9 @@ struct LaunchCreateView: View {
 
 struct LaunchCreateView_Previews: PreviewProvider {
   static var previews: some View {
-    LaunchCreateView()
+    let context = PersistenceController.preview.container.viewContext
+    let newLaunchList = RocketLaunchList(context: context)
+    newLaunchList.title = "Preview List"
+    return LaunchCreateView(launchList: newLaunchList).environment(\.managedObjectContext, context)
   }
 }

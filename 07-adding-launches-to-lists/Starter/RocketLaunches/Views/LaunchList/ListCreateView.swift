@@ -68,6 +68,7 @@ struct ListCreateView: View {
         },
         trailing: Button("Save") {
           if !self.text.isEmpty {
+            RocketLaunchList.create(withTitle: self.text, in: self.viewContext)
             dismiss()
           }
         })
