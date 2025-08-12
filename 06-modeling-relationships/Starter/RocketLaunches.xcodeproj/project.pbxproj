@@ -21,6 +21,8 @@
 		AEF7FB8227C1856F000CBF46 /* LaunchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF7FB8127C1856F000CBF46 /* LaunchesView.swift */; };
 		AEF7FB8627C18583000CBF46 /* LaunchCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF7FB8527C18583000CBF46 /* LaunchCreateView.swift */; };
 		AEF7FB8A27C18598000CBF46 /* LaunchStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF7FB8927C18598000CBF46 /* LaunchStatusView.swift */; };
+		B782C1E82E4BCA07005765F8 /* RocketLaunchList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782C1E62E4BCA07005765F8 /* RocketLaunchList+CoreDataClass.swift */; };
+		B782C1E92E4BCA07005765F8 /* RocketLaunchList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782C1E72E4BCA07005765F8 /* RocketLaunchList+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		AEF7FB8127C1856F000CBF46 /* LaunchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchesView.swift; sourceTree = "<group>"; };
 		AEF7FB8527C18583000CBF46 /* LaunchCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCreateView.swift; sourceTree = "<group>"; };
 		AEF7FB8927C18598000CBF46 /* LaunchStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchStatusView.swift; sourceTree = "<group>"; };
+		B782C1E62E4BCA07005765F8 /* RocketLaunchList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RocketLaunchList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		B782C1E72E4BCA07005765F8 /* RocketLaunchList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RocketLaunchList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +138,8 @@
 		AEF7FB7827C184C1000CBF46 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B782C1E62E4BCA07005765F8 /* RocketLaunchList+CoreDataClass.swift */,
+				B782C1E72E4BCA07005765F8 /* RocketLaunchList+CoreDataProperties.swift */,
 				AE4A726127FA055B006EACBD /* Persistence.swift */,
 				AE4A726327FA0BFF006EACBD /* RocketLaunch+CoreDataClass.swift */,
 				AE4A726527FA0C87006EACBD /* RocketLaunch+CoreDataProperties.swift */,
@@ -281,6 +287,8 @@
 				AE4A726227FA055B006EACBD /* Persistence.swift in Sources */,
 				AE4A726027FA0536006EACBD /* RocketLaunches.xcdatamodeld in Sources */,
 				AEF7FB8227C1856F000CBF46 /* LaunchesView.swift in Sources */,
+				B782C1E82E4BCA07005765F8 /* RocketLaunchList+CoreDataClass.swift in Sources */,
+				B782C1E92E4BCA07005765F8 /* RocketLaunchList+CoreDataProperties.swift in Sources */,
 				1839F4B025190F2A00BB00F1 /* RocketLaunchesApp.swift in Sources */,
 				AE1D5CE827C2A1120033125A /* LaunchDetailView.swift in Sources */,
 				AEF7FB8627C18583000CBF46 /* LaunchCreateView.swift in Sources */,
