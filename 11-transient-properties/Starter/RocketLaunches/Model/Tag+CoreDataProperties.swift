@@ -63,6 +63,13 @@ extension Tag {
       fatalError("Error fetching tag")
     }
   }
+  
+  @objc var launchCount: Int {
+    willAccessValue(forKey: "launches")
+    let count = launches.count
+    didAccessValue(forKey: "launches")
+    return count
+  }
 
   @NSManaged public var title: String?
   @NSManaged public var launches: Set<RocketLaunch>
