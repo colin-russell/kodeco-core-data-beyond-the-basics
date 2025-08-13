@@ -35,6 +35,7 @@ import SwiftUI
 struct LaunchesView: View {
   @State var isShowingCreateModal = false
   @State var activeSortIndex = 0
+  @State var isShowingTagModal = false
   var launchesFetchRequest: FetchRequest<RocketLaunch>
   var launches: FetchedResults<RocketLaunch> {
     launchesFetchRequest.wrappedValue
@@ -45,6 +46,15 @@ struct LaunchesView: View {
     (name: "Name", descriptors: [SortDescriptor(\RocketLaunch.name, order: .forward)]),
     (name: "LaunchDate", descriptors: [SortDescriptor(\RocketLaunch.launchDate, order: .forward)])
   ]
+  
+  var tags: Array<Tag> {
+    let tagsSet = launchList.launches.compactMap({ $0.tags }).reduce(Set<Tag>()) { partialResult, tags in
+      var result = partialResult
+      result.formUnion(tags)
+      return result
+    }
+    return Array(tagsSet)
+  }
 
   init(launchList: RocketLaunchList) {
     self.launchList = launchList
@@ -93,6 +103,13 @@ struct LaunchesView: View {
         Image(systemName: "line.3.horizontal.decrease.circle.fill")
       })
     }
+    .navigationBarItems(
+      trailing: Button(action: { self.isShowingTagModal.toggle() }, label: {
+          Text("Tags")
+      }).sheet(isPresented: self.$isShowingTagModal, content: {
+        TagsView(tags: self.tags)
+      })
+    )
   }
 }
 
