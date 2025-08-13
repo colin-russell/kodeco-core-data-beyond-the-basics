@@ -25,6 +25,8 @@
 		AEF7FB8227C1856F000CBF46 /* LaunchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF7FB8127C1856F000CBF46 /* LaunchesView.swift */; };
 		AEF7FB8627C18583000CBF46 /* LaunchCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF7FB8527C18583000CBF46 /* LaunchCreateView.swift */; };
 		AEF7FB8A27C18598000CBF46 /* LaunchStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF7FB8927C18598000CBF46 /* LaunchStatusView.swift */; };
+		B7A8DD102E4CE05800CED277 /* Tag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A8DD0F2E4CE05800CED277 /* Tag+CoreDataProperties.swift */; };
+		B7A8DD112E4CE05800CED277 /* Tag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A8DD0E2E4CE05800CED277 /* Tag+CoreDataClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		AEF7FB8127C1856F000CBF46 /* LaunchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchesView.swift; sourceTree = "<group>"; };
 		AEF7FB8527C18583000CBF46 /* LaunchCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCreateView.swift; sourceTree = "<group>"; };
 		AEF7FB8927C18598000CBF46 /* LaunchStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchStatusView.swift; sourceTree = "<group>"; };
+		B7A8DD0E2E4CE05800CED277 /* Tag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataClass.swift"; sourceTree = "<group>"; };
+		B7A8DD0F2E4CE05800CED277 /* Tag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +156,8 @@
 		AEF7FB7827C184C1000CBF46 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B7A8DD0E2E4CE05800CED277 /* Tag+CoreDataClass.swift */,
+				B7A8DD0F2E4CE05800CED277 /* Tag+CoreDataProperties.swift */,
 				AE4A726727FA3766006EACBD /* RocketLaunchList+CoreDataClass.swift */,
 				AE4A726827FA3766006EACBD /* RocketLaunchList+CoreDataProperties.swift */,
 				AE4A726127FA055B006EACBD /* Persistence.swift */,
@@ -295,6 +301,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7A8DD102E4CE05800CED277 /* Tag+CoreDataProperties.swift in Sources */,
+				B7A8DD112E4CE05800CED277 /* Tag+CoreDataClass.swift in Sources */,
 				AE4A726627FA0C87006EACBD /* RocketLaunch+CoreDataProperties.swift in Sources */,
 				AE4A726D27FA3A0D006EACBD /* ListView.swift in Sources */,
 				18D775C522AD944300AE281E /* ContentView.swift in Sources */,

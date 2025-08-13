@@ -40,6 +40,7 @@ extension RocketLaunch {
     launchDate: Date,
     isViewed: Bool,
     launchpad: String,
+    tags: Set<Tag> = [],
     in list: RocketLaunchList,
     using managedObjectContext: NSManagedObjectContext
   ) {
@@ -50,6 +51,7 @@ extension RocketLaunch {
     launch.isViewed = isViewed
     launch.launchpad = launchpad
     launch.list = list
+    launch.tags = tags
 
     do {
       try managedObjectContext.save()
@@ -101,5 +103,6 @@ extension RocketLaunch {
   @NSManaged public var launchDate: Date?
   @NSManaged public var launchpad: String?
   @NSManaged public var notes: String?
+  @NSManaged public var tags: Set<Tag>?
   @NSManaged public var list: RocketLaunchList
 }
