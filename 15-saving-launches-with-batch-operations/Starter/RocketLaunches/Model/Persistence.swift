@@ -194,5 +194,17 @@ struct PersistenceController {
 
   }
 
-  //add batch insertion functions here
+  private func createBatchInsertLaunchRequest(from launchCollection: [SpaceXLaunchJSON]) -> NSBatchInsertRequest {
+    var index = 0
+    let total = launchCollection.count
+    
+    let batchInsertRequest = NSBatchInsertRequest(entity: SpaceXLaunch.entity()) { dictionary in
+      guard index < total else { return true }
+      dictionary.addEntries(from: launchCollection[index].dictionaryValue as [AnyHashable : Any])
+      index += 1
+      return false
+    }
+    
+    return batchInsertRequest
+  }
 }
