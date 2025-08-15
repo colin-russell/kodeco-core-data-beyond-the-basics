@@ -191,7 +191,81 @@ struct PersistenceController {
   }
 
   func importLaunches(from launchCollection: [SpaceXLaunchJSON], to listName: String) throws {
-
+    let taskContext = container.viewContext
+    let fairings = launchCollection.map{ ($0.id, $0.fairings) }
+    let links = launchCollection.map{ ($0.id, $0.links) }
+    
+    var list: SpaceXLaunchList!
+    let fetchRequest = SpaceXLaunchList.fetchRequest()
+    let results = try taskContext.fetch(fetchRequest)
+    if let fetchedList = results.first {
+      list = fetchedList
+    }
+    
+    let batchInsertRequest = createBatchInsertLaunchRequest(from: launchCollection)
+    if let fetchResult = try?
+       taskContext.execute(batchInsertRequest),
+       let batchInsertResult = fetchResult as? NSBatchInsertResult,
+       let success = batchInsertResult.result as? Bool,
+       success {
+        return
+      } else {
+        throw LaunchError.batchInsertError
+      }
+    
+    let batchInsertRequest2 = createBatchInsertRelationshipRequest(from: fairings, for: SpaceXFairings.self)
+    if let fetchResult = try?
+       taskContext.execute(batchInsertRequest2),
+       let batchInsertResult = fetchResult as? NSBatchInsertResult,
+       let success = batchInsertResult.result as? Bool,
+       success {
+        return
+      } else {
+        throw LaunchError.batchInsertError
+      }
+    
+    for (id, fairing) in fairings {
+      guard let fairing = fairing else { continue }
+      let fairingFetchRequest = SpaceXFairings.fetchRequest()
+      fairingFetchRequest.predicate = NSPredicate(format: "id == %@", argumentArray: [fairing.id])
+      
+      let launchFetchRequest = SpaceXLaunch.fetchRequest()
+      launchFetchRequest.predicate = NSPredicate(format: "id == %@", argumentArray: [id])
+      
+      let returnedFairing = try taskContext.fetch(fairingFetchRequest) as [SpaceXFairings]
+      let launch = try taskContext.fetch(launchFetchRequest) as [SpaceXLaunch]
+      guard !returnedFairing.isEmpty, !launch.isEmpty else { continue }
+      let matchedFairing = returnedFairing[0]
+      let matchedLaunch = launch[0]
+      matchedFairing.launch = matchedLaunch
+    }
+    try taskContext.save()
+    
+    let batchInsertRequest3 = createBatchInsertRelationshipRequest(from: links, for: SpaceXLinks.self)
+    if let fetchResult = try?
+       taskContext.execute(batchInsertRequest3),
+       let batchInsertResult = fetchResult as? NSBatchInsertResult,
+       let success = batchInsertResult.result as? Bool,
+       success {
+        return
+    } else {
+      throw LaunchError.batchInsertError
+    }
+    
+    // Set up the link relationships
+    for (id, link) in links {
+      let linksFetchRequest = SpaceXLinks.fetchRequest()
+      linksFetchRequest.predicate = NSPredicate(format: "id == %@", argumentArray: [link.id])
+      
+      let launchFetchRequest = SpaceXLaunch.fetchRequest()
+      launchFetchRequest.predicate = NSPredicate(format: "id == %@", argumentArray: [id])
+      
+      let returnedLinks = try taskContext.fetch(linksFetchRequest) as [SpaceXLaunch]
+      let launch = try taskContext.fetch(launchFetchRequest)
+      guard !returnedLinks.isEmpty, !launch.isEmpty else { continue }
+      launch[0].addToSpaceXList(list)
+    }
+    try taskContext.save()
   }
 
   private func createBatchInsertLaunchRequest(from launchCollection: [SpaceXLaunchJSON]) -> NSBatchInsertRequest {
@@ -205,6 +279,24 @@ struct PersistenceController {
       return false
     }
     
+    return batchInsertRequest
+  }
+  
+  private func createBatchInsertRelationshipRequest<T:BatchInsertable, E: NSManagedObject>(from relationshipCollection: [(String, T?)], for type: E.Type) -> NSBatchInsertRequest {
+    var index = 0
+    let total = relationshipCollection.count
+    
+    // Provide one dictionary at a time when the closure is called
+    let batchInsertRequest = NSBatchInsertRequest(entity: E.entity()) { dictionary in
+      guard index < total else { return true }
+      guard let value = relationshipCollection[index].1 else {
+        index += 1
+        return false
+      }
+      dictionary.addEntries(from: value.dictionaryValue as [AnyHashable: Any])
+      index += 1
+      return false
+    }
     return batchInsertRequest
   }
 }
